@@ -8,6 +8,7 @@ turtle.tracer(0)
 turtle.hideturtle()
 canvas_width = turtle.screensize()[0]
 canvas_height = turtle.screensize()[1]
+print(canvas_width, canvas_height)
 ball_radius = 0.05 * canvas_width
 turtle.colormode(255)
 color_list = []
@@ -21,8 +22,8 @@ ball_color = []
 for i in range(num_balls):
     xpos.append(random.randint(-1*canvas_width + ball_radius, canvas_width - ball_radius))
     ypos.append(random.randint(-1*canvas_height + ball_radius, canvas_height - ball_radius))
-    vx.append(random.randint(1, 0.01*canvas_width))
-    vy.append(random.randint(1, 0.01*canvas_height))
+    vx.append(2*random.uniform(-1, 1))
+    vy.append(2*random.uniform(-1, 1))
     ball_color.append((random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)))
 
 dt = 1 # time step
