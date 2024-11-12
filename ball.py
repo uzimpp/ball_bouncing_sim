@@ -17,13 +17,16 @@ def move_ball(i, xpos, ypos, vx, vy, dt):
     ypos[i] += vy[i]*dt
 
 
-def update_ball_velocity(i, xpos, ypos, vx, vy, dt, canvas_width, canvas_height, ball_radius):
-
+def update_ball_velocity(i, xpos, ypos, vx, vy, canvas_width, canvas_height, ball_radius):
     # if the ball hits the side walls, reverse the vx velocity
-    if abs(xpos[i] + vx[i]*dt) > (canvas_width - ball_radius):
+    if abs(xpos[i]) > (canvas_width - ball_radius):
         vx[i] = -vx[i]
 
     # if the ball hits the ceiling or the floor, reverse the vy velocity
-    if abs(ypos[i] + vy[i]*dt) > (canvas_height - ball_radius):
+    if abs(ypos[i]) > (canvas_height - ball_radius):
         vy[i] = -vy[i]
+
+
+
+
 
