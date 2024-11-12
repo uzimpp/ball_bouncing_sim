@@ -1,7 +1,7 @@
 import turtle
 import random
 
-def draw_circle(color, size, x, y):
+def draw_ball(color, size, x, y):
     # draw a circle of radius equals to size at x, y coordinates and paint it with color
     turtle.penup()
     turtle.color(color)
@@ -12,17 +12,20 @@ def draw_circle(color, size, x, y):
     turtle.circle(size)
     turtle.end_fill()
 
-def move_circle(i, xpos, ypos, vx, vy, canvas_width, canvas_height, ball_radius):
+def move_ball(i, xpos, ypos, vx, vy, dt):
     # update the x, y coordinates of ball i with velocity in the x (vx) and y (vy) components
-    xpos[i] += vx[i]
-    ypos[i] += vy[i]
+    xpos[i] += vx[i]*dt
+    ypos[i] += vy[i]*dt
+
+
+def update_ball_velocity(i, xpos, ypos, vx, vy, dt, canvas_width, canvas_height, ball_radius):
 
     # if the ball hits the side walls, reverse the vx velocity
-    if abs(xpos[i] + vx[i]) > (canvas_width - ball_radius):
+    if abs(xpos[i] + vx[i]*dt) > (canvas_width - ball_radius):
         vx[i] = -vx[i]
 
     # if the ball hits the ceiling or the floor, reverse the vy velocity
-    if abs(ypos[i] + vy[i]) > (canvas_height - ball_radius):
+    if abs(ypos[i] + vy[i]*dt) > (canvas_height - ball_radius):
         vy[i] = -vy[i]
 
 def initilizing(xpos, ypos, vx, vy, ball_color, canvas_width, canvas_height, ball_radius, num_balls):
