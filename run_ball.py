@@ -19,10 +19,10 @@ ball_color = []
 
 # create random number of balls, num_balls, located at random positions within the canvas; each ball has a random velocity value in the x and y direction and is painted with a random color
 for i in range(num_balls):
-    xpos.append(random.randint(-1*canvas_width + ball_radius, canvas_width - ball_radius))
-    ypos.append(random.randint(-1*canvas_height + ball_radius, canvas_height - ball_radius))
-    vx.append(2*random.uniform(-1.0, 1.0))
-    vy.append(2*random.uniform(-1.0, 1.0))
+    xpos.append(random.uniform(-1*canvas_width + ball_radius, canvas_width - ball_radius))
+    ypos.append(random.uniform(-1*canvas_height + ball_radius, canvas_height - ball_radius))
+    vx.append(10*random.uniform(-1.0, 1.0))
+    vy.append(10*random.uniform(-1.0, 1.0))
     ball_color.append((random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)))
 
 def draw_border():
