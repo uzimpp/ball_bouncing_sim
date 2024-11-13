@@ -2,50 +2,64 @@ import turtle
 import ball
 import random
 
-num_balls = int(input("Number of balls to simulate: "))
-turtle.speed(0)
-turtle.tracer(0)
-turtle.hideturtle()
-canvas_width = turtle.screensize()[0]
-canvas_height = turtle.screensize()[1]
-print(canvas_width, canvas_height)
-ball_radius = 0.05 * canvas_width
-turtle.colormode(255)
-xpos = []
-ypos = []
-vx = []
-vy = []
-ball_color = []
+class BouncingSimulator():
+	def __init__(self, n_balls):
+		turtle.speed(0)
+		turtle.tracer(0)
+		turtle.hideturtle()
+		turtle.colormode(255)
+		self.__n_balls = n_balls
+		self.__canvas_width = turtle.screensize()[0]
+		self.__canvas_height = turtle.screensize()[1]
+		self.__ball = []
+		self.__size = 0.05 * self.__canvas_width
+		for _ in range(n_balls):
+			self.__create_new_ball()
+			
 
-# create random number of balls, num_balls, located at random positions within the canvas; each ball has a random velocity value in the x and y direction and is painted with a random color
-for i in range(num_balls):
-    xpos.append(random.uniform(-1*canvas_width + ball_radius, canvas_width - ball_radius))
-    ypos.append(random.uniform(-1*canvas_height + ball_radius, canvas_height - ball_radius))
-    vx.append(10*random.uniform(-1.0, 1.0))
-    vy.append(10*random.uniform(-1.0, 1.0))
-    ball_color.append((random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)))
+	def __create_new_ball(self):
+		x = random.uniform(-1 * self.__canvas_width + self.__size, self.__canvas_width - self.__size)
+		y = random.uniform(-1 * self.__canvas_height + self.__size, self.__canvas_height - self.__size)
+		vx = 10 * random.uniform(-1.0, 1.0)
+		vy = 10 * random.uniform(-1.0, 1.0)
+		# vx = 10 * random.uniform(-0.5, 0.5)
+		# vy = 10 * random.uniform(-0.5, 0.5)
+		ball_color = random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)
+		self.__ball.append(ball.Ball(ball_color, self.__size, x, y ,vx, vy))
+		self.__n_balls += 1
 
-def draw_border():
-    turtle.penup()
-    turtle.goto(-canvas_width, -canvas_height)
-    turtle.pensize(10)
-    turtle.pendown()
-    turtle.color((0, 0, 0))
-    for i in range(2):
-        turtle.forward(2*canvas_width)
-        turtle.left(90)
-        turtle.forward(2*canvas_height)
-        turtle.left(90)
+	def __draw_border(self):
+		turtle.penup()
+		turtle.goto(-self.__canvas_width, -self.__canvas_height)
+		turtle.pensize(10)
+		turtle.pendown()
+		turtle.color((0, 0, 0))
+		for i in range(2):
+			turtle.forward(2 * self.__canvas_width)
+			turtle.left(90)
+			turtle.forward(2 * self.__canvas_height)
+			turtle.left(90)
+
+	def run(self):
+		self.__draw_border()
+		while (True):
+			turtle.clear()
+			self.__draw_border()
+			for ball in self.__ball:
+				ball.draw_ball()
+				ball.move_ball(dt)
+				# This commented is for creating new ball every times aa ball bounce
+				# Just like a tiktok vids !!! :D
+				if ball.update_ball_velocity(self.__canvas_width, self.__canvas_height):
+					print("Bounce !!")
+					# print(self.__n_balls)
+					# self.__create_new_ball()
+			turtle.update()
 
 dt = 1 # time step
-while (True):
-    turtle.clear()
-    draw_border()
-    for i in range(num_balls):
-        ball.draw_ball(ball_color[i], ball_radius, xpos[i], ypos[i])
-        ball.move_ball(i, xpos, ypos, vx, vy, dt)
-        ball.update_ball_velocity(i, xpos, ypos, vx, vy, canvas_width, canvas_height, ball_radius)
-    turtle.update()
 
-# hold the window; close it by clicking the window close 'x' mark
+num_balls = int(input("Number of balls to simulate: "))
+simulator = BouncingSimulator(num_balls)
+simulator.run()
+
 turtle.done()
