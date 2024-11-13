@@ -5,7 +5,7 @@ def draw_ball(color, size, x, y):
     turtle.penup()
     turtle.color(color)
     turtle.fillcolor(color)
-    turtle.goto(x,y)
+    turtle.goto(x,y-size)
     turtle.pendown()
     turtle.begin_fill()
     turtle.circle(size)
